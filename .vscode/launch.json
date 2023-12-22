@@ -15,6 +15,23 @@
                 "--config",
                 "cifar10"
             ]
+        },
+        {
+            "name": "eval",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "eval.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
+                "--config",
+                "cifar10",
+                "--output_dir",
+                "./samples/cifar10",
+                "--sample_num",
+                "100"
+            ]
         }
     ]
 }

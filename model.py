@@ -1,6 +1,7 @@
 from diffusers import UNet2DModel
 from config import load_config
 
+
 def get_model(config):
     assert config.num_feat_map == 4 or config.num_feat_map == 2
     down_black_types = ("DownBlock2D",) * config.num_feat_map + (
@@ -27,9 +28,28 @@ def get_model(config):
     )
     return model
 
+
+def print_trainable_parameters(model):
+    trainable_params = 0
+    all_params = 0
+    for _, param in model.named_parameters():
+        all_params += param.numel()
+        if param.requires_grad:
+            trainable_params += param.numel()
+    print(
+        f"trainable params: {trainable_params} || all params: {all_params} || trainable%:{(100 * trainable_params/all_params):4f}"
+    )
+
+
 if __name__ == "__main__":
-    
     name = "cifar10"
+    config = load_config(name)
+    model = get_model(config)
+    print(config.name, "model parameters:")
+    print_trainable_parameters(model)
+
     name = "lsun_church"
-    config = load_config()
-    
+    config = load_config(name)
+    model = get_model(config)
+    print(config.name, "model parameters:")
+    print_trainable_parameters(model)

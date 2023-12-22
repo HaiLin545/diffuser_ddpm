@@ -15,6 +15,12 @@ def get_dataset(config):
         dataset = get_lsun_church_dataset(config)
     return dataset
 
+def get_eval_dataset(config):
+    if config.name == "cifar10":
+        dataset= get_cifar10_dataset(config)
+    elif config.name == "lsun_chruch":
+        dataset = get_lsun_church_dataset(config, "val")
+        
 
 def transform(config):
     return transforms.Compose(
@@ -24,6 +30,24 @@ def transform(config):
             transforms.ToTensor(),
             transforms.Normalize([0.5], [0.5]),
         ]
+    )
+
+
+def get_lsun_church_dataset(config, split="train"):
+    assert config.name == "lsun_church"
+    return datasets.LSUN(
+        root="./datasets",
+        classes=[f"church_outdoor_{split}"],
+        transform=transform(config),
+    )
+
+
+def get_cifar10_dataset(config):
+    assert config.name == "cifar10"
+    return datasets.CIFAR10(
+        root=config.dataset_path,
+        train=True,
+        transform=transform(config),
     )
 
 
@@ -39,24 +63,6 @@ def get_hub_dataset(config):
 
     dataset.set_transform(transform)
     return dataset
-
-
-def get_lsun_church_dataset(config):
-    assert config.name == "lsun_church"
-    return datasets.LSUN(
-        root="./datasets",
-        classes=["church_outdoor_train"],
-        transform=transform(config),
-    )
-
-
-def get_cifar10_dataset(config):
-    assert config.name == "cifar10"
-    return datasets.CIFAR10(
-        root=config.dataset_path,
-        train=True,
-        transform=transform(config),
-    )
 
 
 if __name__ == "__main__":

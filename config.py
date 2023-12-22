@@ -13,18 +13,8 @@ class BaseConfig:
     save_image_epochs = 5
     save_model_epochs = 10
     mixed_precision = "fp16"  # `no` for float32, `fp16` for automatic mixed precision
-    output_dir = (
-        "outputs/ddpm-butterflies-128"  # the model name locally and on the HF Hub
-    )
-
-    push_to_hub = False  # whether to upload the saved model to the HF Hub
-    hub_model_id = "<your-username>/<my-awesome-model>"  # the name of the repository to create on the HF Hub
-    hub_private_repo = False
     overwrite_output_dir = True  # overwrite the old model when re-running the notebook
     seed = 0
-
-    dataset_name = "huggan/smithsonian_butterflies_subset"
-
 
 @dataclass
 class Cifar10Config(BaseConfig):
@@ -32,10 +22,10 @@ class Cifar10Config(BaseConfig):
     image_size = 32
     train_batch_size = 64
     eval_batch_size = 64
+    sample_batch_size = 500
     dataset_name = "cifar10"
     dataset_path = "./datasets/"
     output_dir = "outputs/ddpm-cifar10-64"
-
     num_feat_map = 2
 
 @dataclass
@@ -44,10 +34,12 @@ class LSUNChurchConfig(BaseConfig):
     image_size = 256
     train_batch_size = 4
     eval_batch_size = 16
+    sample_batch_size = 50
+    num_epochs = 5
+    save_image_epochs = 1
     learning_rate = 2e-5
     dataset_path = "./datasets/"
     output_dir = "outputs/ddpm-lsun-church-256"
-    num_epochs = 5
     num_feat_map = 4
 
 

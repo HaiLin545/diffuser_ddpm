@@ -156,8 +156,9 @@ def main(args):
         num_training_steps=(len(train_dataloader) * config.num_epochs),
     )
 
-    args = (config, model, noise_scheduler, optimizer, train_dataloader, lr_scheduler)
-    notebook_launcher(train_loop, args, num_processes=4)
+    ngpu = args.ngpu if args.ngpu else 1
+    params = (config, model, noise_scheduler, optimizer, train_dataloader, lr_scheduler)
+    notebook_launcher(train_loop, params, num_processes=ngpu)
 
 
 if __name__ == "__main__":
@@ -167,6 +168,11 @@ if __name__ == "__main__":
         help="config name, etc cifar10, lsun_church",
         type=str,
         required=True,
+    )
+    parser.add_argument(
+        "--ngpu",
+        help="numbe of gpu",
+        type=int,
     )
     args = parser.parse_args()
     main(args)
