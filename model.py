@@ -30,6 +30,6 @@ def get_model(config):
 if __name__ == "__main__":
     
     name = "cifar10"
-    name = "lsun_bedroom"
+    name = "lsun_church"
     config = load_config()
     

@@ -164,7 +164,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--config",
-        help="config name, etc cifar10, lsun_bedroom",
+        help="config name, etc cifar10, lsun_church",
         type=str,
         required=True,
     )

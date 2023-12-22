@@ -10,8 +10,8 @@ class BaseConfig:
     gradient_accumulation_steps = 1
     learning_rate = 1e-4
     lr_warmup_steps = 500
-    save_image_epochs = 10
-    save_model_epochs = 30
+    save_image_epochs = 5
+    save_model_epochs = 10
     mixed_precision = "fp16"  # `no` for float32, `fp16` for automatic mixed precision
     output_dir = (
         "outputs/ddpm-butterflies-128"  # the model name locally and on the HF Hub
@@ -42,19 +42,19 @@ class Cifar10Config(BaseConfig):
 class LSUNChurchConfig(BaseConfig):
     name = "lsun_church"
     image_size = 256
-    train_batch_size = 8
-    eval_batch_size = 8
+    train_batch_size = 4
+    eval_batch_size = 16
     learning_rate = 2e-5
-    dataset_name = "tglcourse/lsun_church_train"
-    output_dir = "outputs/ddpm-lsun-bedroom-256"
-
+    dataset_path = "./datasets/"
+    output_dir = "outputs/ddpm-lsun-church-256"
+    num_epochs = 5
     num_feat_map = 4
 
 
 def load_config(config):
     if config == "cifar10":
         return Cifar10Config()
-    elif config == "lsun_bedroom":
+    elif config == "lsun_church":
         return LSUNChurchConfig()
 
     return BaseConfig()
